@@ -1,0 +1,22 @@
+{
+  "name": "convex-nuxt-template",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --dotenv .env.local",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "convex": "^1.31.7",
+    "convex-nuxt": "0.1.5",
+    "nuxt": "^4.3.1",
+    "vue": "^3.5.28",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.3"
+  }
+}
