@@ -9,8 +9,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      workosClientId: process.env.WORKOS_CLIENT_ID,
-      workosRedirectUri: process.env.WORKOS_REDIRECT_URI,
+      workosClientId: '',
+      workosRedirectUri: '',
     },
   },
 })
