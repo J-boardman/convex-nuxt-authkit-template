@@ -1,75 +1,45 @@
-# Nuxt Minimal Starter
+# Convex Nuxt Template
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A minimal [Nuxt](https://nuxt.com) starter template with [Convex](https://convex.dev) using the [convex-nuxt](https://www.npmjs.com/package/convex-nuxt) module.
 
-## Setup
+## Getting Started
 
-Make sure to install dependencies:
+1. Install dependencies
 
-```bash
-# npm
-npm install
+   ```bash
+   bun install
+   ```
 
-# pnpm
-pnpm install
+2. Set up a Convex dev deployment
 
-# yarn
-yarn install
+   Run `npx convex dev`. This will prompt you to log in with GitHub, create a project, and save your production and deployment URLs.
 
-# bun
-bun install
-```
+   The `dev` command will then continue running to sync your functions with your dev deployment in the cloud.
 
-## Development Server
+   ```bash
+   npx convex dev
+   ```
 
-Start the development server on `http://localhost:3000`:
+3. Add sample data to your database
 
-```bash
-# npm
-npm run dev
+   In a new terminal window, create a `sampleData.jsonl` file with some sample data.
 
-# pnpm
-pnpm dev
+   ```jsonl
+   {"text": "Buy groceries", "isCompleted": true}
+   {"text": "Go for a swim", "isCompleted": true}
+   {"text": "Integrate Convex", "isCompleted": false}
+   ```
 
-# yarn
-yarn dev
+   Then import it into your Convex database:
 
-# bun
-bun run dev
-```
+   ```bash
+   npx convex import --table tasks sampleData.jsonl
+   ```
 
-## Production
+4. Start the app
 
-Build the application for production:
+   In a new terminal window, start the development server and open [http://localhost:3000](http://localhost:3000):
 
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+   ```bash
+   bun run dev
+   ```

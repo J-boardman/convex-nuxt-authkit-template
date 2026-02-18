@@ -1,15 +1,25 @@
 <script setup lang="ts">
-import { api } from "~~/convex/_generated/api";
-const { data: tasks } = useConvexQuery(api.tasks.get);
+
+const { user, signIn, signOut } = useAuth();
+
 </script>
 
 <template>
   <div>
-    <h1>Tasks</h1>
-    <ul>
-      <li v-for="task in tasks" :key="task._id">
-        <span>{{ task.text }}</span>
-      </li>
-    </ul>
+    <h1>Convex 🤝 Nuxt 🤝 WorkOS AuthKit</h1>
+
+    <AuthLoading>
+      <p>Loading...</p>
+    </AuthLoading>
+
+    <Unauthenticated>
+      <button @click="signIn()">Sign In</button>
+    </Unauthenticated>
+
+    <Authenticated>
+      <p>Signed in as {{ user?.email }}</p>
+      <button @click="signOut()">Sign Out</button>
+      <TaskList />
+    </Authenticated>
   </div>
 </template>

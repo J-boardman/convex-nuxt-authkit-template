@@ -5,5 +5,6 @@ export default defineSchema({
   tasks: defineTable({
     text: v.string(),
     isCompleted: v.boolean(),
-  }),
+    createdBy: v.string(),
+  }).index("by_created_by", ["createdBy"]),
 });
