@@ -2,6 +2,22 @@ import { createClient, type User } from "@workos-inc/authkit-js";
 import { AUTH_KEY, type AuthState } from "~/composables/useAuth";
 import { CONVEX_AUTH_KEY, type ConvexAuthState } from "~/composables/useConvexAuth";
 
+// The authkit-js library checks for this cookie (on the app domain) to determine
+// whether to attempt session restoration on page refresh in production. In dev mode
+// (localhost) it uses localStorage instead, but in production it relies on this
+// indicator cookie — which the library never sets itself. We manage it here.
+const SESSION_INDICATOR_COOKIE = "workos-has-session";
+
+function setSessionIndicatorCookie() {
+  const expires = new Date();
+  expires.setDate(expires.getDate() + 7);
+  document.cookie = `${SESSION_INDICATOR_COOKIE}=1; path=/; expires=${expires.toUTCString()}; SameSite=Lax`;
+}
+
+function clearSessionIndicatorCookie() {
+  document.cookie = `${SESSION_INDICATOR_COOKIE}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax`;
+}
+
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig();
   const clientId = config.public.workosClientId as string;
@@ -92,6 +108,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       if (workosClient) await workosClient.signUp(opts);
     },
     signOut: () => {
+      clearSessionIndicatorCookie();
       workosClient?.signOut();
     },
     getAccessToken: async () => {
@@ -113,9 +130,11 @@ export default defineNuxtPlugin((nuxtApp) => {
   createClient(clientId, {
     redirectUri,
     onRefresh: ({ user: refreshedUser, organizationId: orgId }) => {
+      setSessionIndicatorCookie();
       updateAuthState(refreshedUser, orgId);
     },
     onRefreshFailure: () => {
+      clearSessionIndicatorCookie();
       updateAuthState(null);
       clearConvexAuth();
     },
@@ -127,8 +146,10 @@ export default defineNuxtPlugin((nuxtApp) => {
     isLoading.value = false;
 
     if (currentUser) {
+      setSessionIndicatorCookie();
       setupConvexAuth(client);
     } else {
+      clearSessionIndicatorCookie();
       clearConvexAuth();
     }
   }).catch((err) => {

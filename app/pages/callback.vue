@@ -6,7 +6,7 @@ watch(isLoading, (loading) => {
   if (!loading) {
     router.replace("/");
   }
-});
+}, { immediate: true });
 </script>
 
 <template>
