@@ -1,17 +1,14 @@
 import type { Ref, InjectionKey } from "vue";
-import type { User } from "@workos-inc/authkit-js";
+import type { SessionUser } from "~~/server/utils/auth";
 
 export interface AuthState {
   isLoading: Ref<boolean>;
-  user: Ref<User | null>;
-  organizationId: Ref<string | null>;
-  role: Ref<string | null>;
-  permissions: Ref<string[]>;
+  user: Ref<SessionUser | null>;
   signIn: (options?: { organizationId?: string; loginHint?: string }) => Promise<void>;
   signUp: (options?: { organizationId?: string; loginHint?: string }) => Promise<void>;
-  signOut: () => void;
+  signOut: () => Promise<void>;
   getAccessToken: () => Promise<string>;
-  getUser: () => User | null;
+  getUser: () => SessionUser | null;
 }
 
 export const AUTH_KEY: InjectionKey<AuthState> = Symbol("workos-auth");

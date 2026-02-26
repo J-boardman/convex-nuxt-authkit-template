@@ -1,0 +1,16 @@
+{
+  "authkit": {
+    "dev": {
+      "redirectUri": "http://localhost:3000/api/auth/callback",
+      "workosEnvVarName": "WORKOS_CLIENT_ID"
+    },
+    "preview": {
+      "redirectUri": "https://${buildEnv.VERCEL_BRANCH_URL}/api/auth/callback",
+      "workosEnvVarName": "WORKOS_CLIENT_ID"
+    },
+    "prod": {
+      "redirectUri": "https://${buildEnv.VERCEL_PROJECT_PRODUCTION_URL}/api/auth/callback",
+      "workosEnvVarName": "WORKOS_CLIENT_ID"
+    }
+  }
+}
