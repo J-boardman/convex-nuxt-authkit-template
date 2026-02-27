@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { isLoading } = useConvexAuth();
+const { isLoading } = useAuth();
 </script>
 
 <template>
